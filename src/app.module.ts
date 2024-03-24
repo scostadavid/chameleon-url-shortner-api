@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common/decorators';
 import { UrlModule } from './url/url.module';
 
 @Module({
