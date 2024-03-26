@@ -1,18 +1,18 @@
-import { PrismaService } from '../../common/database/prisma/prisma.service';
+import { PrismaService } from '../common/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common/decorators';
 import { ShortenedUrl } from '@prisma/client';
 import { Observable, from } from 'rxjs';
 
 @Injectable()
-export class UrlRepository {
+export class UrlsRepository {
   constructor(readonly prisma: PrismaService) {}
 
-  get(hash: string): Observable<ShortenedUrl> {
+  findOne(id: number): Observable<ShortenedUrl> {
     return from(
       this.prisma.shortenedUrl
-        .findFirst({
+        .findUnique({
           where: {
-            hash: hash,
+            id,
           },
         })
         .catch((error) => {
@@ -22,7 +22,22 @@ export class UrlRepository {
     );
   }
 
-  post(title: string, hash: string, url: string): Observable<ShortenedUrl> {
+  findOneByHash(hash: string): Observable<ShortenedUrl> {
+    return from(
+      this.prisma.shortenedUrl
+        .findUnique({
+          where: {
+            hash,
+          },
+        })
+        .catch((error) => {
+          console.error('Error occurred while fetching shortened URL:', error);
+          throw error;
+        }),
+    );
+  }
+
+  create(title: string, hash: string, url: string): Observable<ShortenedUrl> {
     return from(
       this.prisma.shortenedUrl.create({
         data: {
@@ -35,11 +50,15 @@ export class UrlRepository {
     );
   }
 
-  put(title: string, hash: string, url: string): Observable<ShortenedUrl> {
+  findAll() {
+    return from(this.prisma.shortenedUrl.findMany());
+  }
+
+  update(id: number, title: string, url: string): Observable<ShortenedUrl> {
     return from(
       this.prisma.shortenedUrl.update({
         where: {
-          hash,
+          id,
         },
         data: {
           title,
@@ -49,13 +68,12 @@ export class UrlRepository {
     );
   }
 
-  destroy(hash: string): Observable<ShortenedUrl> {
-    console.log('try delete', hash);
+  remove(id: number): Observable<ShortenedUrl> {
     return from(
       this.prisma.shortenedUrl
         .delete({
           where: {
-            hash: hash,
+            id,
           },
         })
         .catch((error) => {
