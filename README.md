@@ -1,5 +1,5 @@
 # 🦎 Chameleon
-Nest JS URL shortener api written in typescript.
+> Typescript/NestJS URL shortener api
 
 <!-- ## Table of contents
 1. Requirements
@@ -68,7 +68,22 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Test
+## Endpoints
+
+
+
+Aqui está a tabela expandida, incluindo o formato de resposta (response) para cada endpoint:
+
+| HTTP Method | Endpoint       | Description                                       | Example Input/Parameters         | Response Example                          |
+|-------------|----------------|---------------------------------------------------|----------------------------------|-------------------------------------------|
+| `POST`      | `/urls`        | Creates a new URL record                          | `{ "title": "My Site", "url": "https://example.com" }` | `{ "id": 1, "title": "My Site", "url": "https://example.com", "hash": "abc123" }` |
+| `GET`       | `/urls`        | Retrieves all URL records                         | N/A                              | `[ { "id": 1, "title": "My Site", "url": "https://example.com", "hash": "abc123" }, { "id": 2, "title": "Another Site", "url": "https://another.com", "hash": "xyz789" } ]` |
+| `GET`       | `/urls/:id`    | Retrieves a specific URL record by ID             | `id: 1`                          | `{ "id": 1, "title": "My Site", "url": "https://example.com", "hash": "abc123" }` |
+| `PATCH`     | `/urls/:id`    | Updates a specific URL record by ID               | `id: 1, { "title": "Updated Title", "url": "https://updated.com" }` | `{ "id": 1, "title": "Updated Title", "url": "https://updated.com", "hash": "abc123" }` |
+| `DELETE`    | `/urls/:id`    | Deletes a specific URL record by ID               | `id: 1`                          | `{ "message": "URL deleted successfully" }` |
+| `GET`       | `/:hash`       | Redirects to the original URL based on the hash   | `hash: abc123` (e.g., `/abc123` would redirect to the corresponding full URL) | HTTP 302 Redirect to the original URL (e.g., "https://example.com") |
+
+## Testing
 
 ```bash
 # unit tests
@@ -83,10 +98,10 @@ $ yarn run test:cov
 
 ## 👨‍💻 Maintainers/Contributors
 
-* David Costa - [scostadavid@proton.me](mailto:scostadavid@proton.me)
+* David Costa - [mailto:scostadavid.dev@gmail.com](mailto:scostadavid.dev@gmail.com)
 
-<!-- ## 📝 License
+## 📝 License
 
-This project is licensed under the MIT GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE) file for more details. -->
+This project is licensed under the MIT GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE) file for more details.
 
 **Open Source Software** ヽ(・∀・)ﾉ
