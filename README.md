@@ -1,6 +1,5 @@
 # 🦎 Chameleon
-
-under development URL shortener written in typescript.
+Nest JS URL shortener api written in typescript.
 
 <!-- ## Table of contents
 1. Requirements
